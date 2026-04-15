@@ -176,3 +176,5 @@ def create_order():
         )
 
     return {"ok": True}
+if __name__ == "__main__":
+    init_db()
