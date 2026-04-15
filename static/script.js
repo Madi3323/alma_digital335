@@ -182,3 +182,22 @@ async function doLogout() {
 function selectPlan(plan) {
   alert(`Plan "${capitalize(plan)}" selected! (Demo mode — no payment processing)`);
 }
+document.getElementById("createOrderBtn")?.addEventListener("click", async () => {
+  const title = document.getElementById("orderTitle").value;
+  const amount = document.getElementById("orderAmount").value;
+
+  const res = await fetch("/api/orders", {
+    method: "POST",
+    headers: {"Content-Type":"application/json"},
+    body: JSON.stringify({title, amount})
+  });
+
+  const data = await res.json();
+
+  if (data.ok) {
+    alert("Заявка создана 🚀");
+    location.reload();
+  } else {
+    alert(data.error);
+  }
+});
