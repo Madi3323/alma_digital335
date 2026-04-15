@@ -238,7 +238,7 @@ function initCreateOrder() {
     loadOrders(1);
   });
 }
-
+initCreateOrder();
 
 
 
