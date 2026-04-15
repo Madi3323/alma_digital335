@@ -180,21 +180,4 @@ if __name__ == "__main__":
     init_db()
 
 @app.route("/api/create-order", methods=["POST"])
-@login_required
-def create_order():
-    data = request.get_json(silent=True) or {}
-
-    title = (data.get("title") or "").strip()
-    amount = float(data.get("amount") or 0)
-
-    if not title:
-        return jsonify({"error": "Введите название заявки"}), 400
-
-    with get_db() as conn:
-        conn.execute(
-            "INSERT INTO orders (user_id, title, amount) VALUES (?, ?, ?)",
-            (session["user_id"], title, amount)
-        )
-
-    return jsonify({"ok": True})
 
