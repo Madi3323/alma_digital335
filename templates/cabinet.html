@@ -120,7 +120,18 @@
           </div>
         </div>
       </div>
+      
+<div class="create-order">
+  <h2 class="panel__subtitle">Создать заявку</h2>
 
+  <input type="text" id="orderTitle" placeholder="Название заявки" class="form-input" />
+  <input type="number" id="orderAmount" placeholder="Сумма (₸)" class="form-input" />
+
+  <button class="btn btn--primary" id="createOrderBtn">Создать</button>
+
+  <div id="orderError" class="form-error"></div>
+</div>   
+      
       <!-- Orders Tab -->
       <div class="tab-content hidden" id="tab-orders">
         <div class="tab-header">
