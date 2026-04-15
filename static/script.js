@@ -198,6 +198,64 @@ document.getElementById("createOrderBtn")?.addEventListener("click", async () =>
     alert("Заявка создана 🚀");
     location.reload();
   } else {
+
+function initCreateOrder() {
+  const btn = document.getElementById("createOrderBtn");
+  if (!btn) return;
+
+  btn.addEventListener("click", async () => {
+    const title = document.getElementById("orderTitle").value.trim();
+    const amount = document.getElementById("orderAmount").value;
+    const errorEl = document.getElementById("orderError");
+
+    errorEl.textContent = "";
+
+    if (!title) {
+      errorEl.textContent = "Введите название";
+      return;
+    }
+
+    const res = await fetch("/api/create-order", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ title, amount })
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      errorEl.textContent = data.error || "Ошибка";
+      return;
+    }
+
+    // очистка
+    document.getElementById("orderTitle").value = "";
+    document.getElementById("orderAmount").value = "";
+
+    // перезагрузка списка
+    loadOrders(1);
+  });
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
     alert(data.error);
   }
 });
