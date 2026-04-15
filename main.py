@@ -157,3 +157,22 @@ if __name__ == "__main__":
     app.run(host="0.0.0.0", port=port)
 
 init_db()
+@app.route("/api/orders", methods=["POST"])
+def create_order():
+    if "uid" not in session:
+        return {"error": "Unauthorized"}, 401
+
+    data = request.json
+    title = data.get("title")
+    amount = data.get("amount", 0)
+
+    if not title:
+        return {"error": "Введите название"}, 400
+
+    with db() as conn:
+        conn.execute(
+            "INSERT INTO orders (user_id, title, amount) VALUES (?, ?, ?)",
+            (session["uid"], title, amount)
+        )
+
+    return {"ok": True}
