@@ -240,7 +240,43 @@ function initCreateOrder() {
 }
 initCreateOrder();
 
+document.getElementById("orderBtn")?.addEventListener("click", async () => {
+  const title = document.getElementById("orderTitle").value.trim();
+  const amount = document.getElementById("orderAmount").value;
+  const msg = document.getElementById("orderMsg");
 
+  if (!title) {
+    msg.textContent = "Введите название";
+    msg.style.color = "red";
+    return;
+  }
+
+  const res = await fetch("/api/orders", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    credentials: "include",
+    body: JSON.stringify({
+      title,
+      amount
+    })
+  });
+
+  const data = await res.json();
+
+  if (!res.ok) {
+    msg.textContent = data.error || "Ошибка";
+    msg.style.color = "red";
+    return;
+  }
+
+  msg.textContent = "Заявка отправлена 🚀";
+  msg.style.color = "#00ffae";
+
+  document.getElementById("orderTitle").value = "";
+  document.getElementById("orderAmount").value = "";
+});
 
 
 
